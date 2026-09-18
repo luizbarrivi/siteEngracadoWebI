@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - O Pior Captcha do Mundo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="login-card">
+    <h2>Acessar Conta</h2>
+    
+    <form id="loginForm" onsubmit="finalizarLogin(event)">
+      <div class="input-group">
+        <label for="username">Usuário / E-mail</label>
+        <input type="text" id="username" placeholder="Digite seu usuário" required />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="••••••••" required />
+      </div>
+
+      <!-- CONTAINER PRINCIPAL DO CAPTCHA -->
+      <div class="captcha-box" id="captchaBox">
+        
+        <!-- TELA INICIAL: RECAPTCHA PADRÃO DO GOOGLE -->
+        <div class="initial-widget" id="initialWidget">
+          <div class="recaptcha-card">
+            
+            <!-- ÁREA INTERATIVA DO CHECKBOX -->
+            <div class="runaway-container" id="runawayContainer">
+              <div class="captcha-status" id="runawayBox">
+                <div class="checkbox-wrapper">
+                  <input type="checkbox" id="captchaCheckbox" />
+                </div>
+                <span id="checkboxLabel">Não sou um robô</span>
+              </div>
+            </div>
+
+            <!-- BRANDING OFICIAL DO RECAPTCHA -->
+            <div class="recaptcha-branding">
+              <div class="recaptcha-logo">
+                <svg viewBox="0 0 48 48" width="32" height="32">
+                  <path fill="#1A73E8" d="M24 8c8.84 0 16 7.16 16 16 0 2.26-.47 4.41-1.32 6.36l3.02 3.02C43.12 30.29 44 27.24 44 24c0-11.05-8.95-20-20-20-3.24 0-6.29.88-8.94 2.37l3.02 3.02C19.59 8.47 21.74 8 24 8z"/>
+                  <path fill="#4285F4" d="M11.36 12.68L8.34 9.66C5.88 12.31 4 15.8 4 24c0 11.05 8.95 20 20 20 3.24 0 6.29-.88 8.94-2.37l-3.02-3.02C28.41 39.53 26.26 40 24 40c-8.84 0-16-7.16-16-16 0-3.32.96-6.41 2.62-9.02l2.74 2.7z"/>
+                  <path fill="#34A853" d="M24 16c4.42 0 8 3.58 8 8 0 1.22-.27 2.37-.76 3.4l2.88 2.88C35.2 28.53 36 26.36 36 24c0-6.63-5.37-12-12-12-2.36 0-4.53.8-6.28 2.12l2.88 2.88C21.63 16.27 22.78 16 24 16z"/>
+                </svg>
+              </div>
+              <span class="recaptcha-text">reCAPTCHA</span>
+              <div class="recaptcha-links">
+                <a href="https://www.google.com/intl/pt-BR/policies/privacy/" target="_blank">Privacidade</a>
+                <span>-</span>
+                <a href="https://www.google.com/intl/pt-BR/policies/terms/" target="_blank">Termos</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- CABEÇALHO DO CAPTCHA -->
+        <div class="captcha-instruction-bar" id="instructionBar" style="display: none;">
+          <h3 id="captchaTitle">Selecione todas as imagens com bicicletas</h3>
+        </div>
+
+        <!-- ÁREA DOS MINIJOGOS -->
+        <div class="captcha-viewport" id="captchaViewport" style="display: none;">
+          <!-- ETAPA 1 -->
+          <div class="game-step" id="step1">
+            <div class="image-grid" id="gridBikes">
+              <div class="grid-cell" data-index="0"></div>
+              <div class="grid-cell" data-index="1"></div>
+              <div class="grid-cell" data-index="2"></div>
+              <div class="grid-cell" data-index="3"></div>
+              <div class="grid-cell" data-index="4"></div>
+              <div class="grid-cell" data-index="5"></div>
+              <div class="grid-cell" data-index="6"></div>
+              <div class="grid-cell" data-index="7"></div>
+              <div class="grid-cell" data-index="8"></div>
+              <div class="grid-cell" data-index="9"></div>
+              <div class="grid-cell" data-index="10"></div>
+              <div class="grid-cell" data-index="11"></div>
+              <div class="grid-cell" data-index="12"></div>
+              <div class="grid-cell" data-index="13"></div>
+              <div class="grid-cell" data-index="14"></div>
+              <div class="grid-cell" data-index="15"></div>
+            </div>
+          </div>
+
+          <!-- ETAPA 2 -->
+          <div class="game-step" id="step2">
+            <div class="wordsearch-grid" id="wordsearchGrid"></div>
+          </div>
+
+          <!-- ETAPA 3 -->
+          <div class="game-step" id="step3">
+            <div class="solar-system" id="solarSystem">
+              <div class="sun"></div>
+              <div class="orbit-ring" data-orbit="1"></div>
+              <div class="orbit-ring" data-orbit="2"></div>
+              <div class="orbit-ring" data-orbit="3"></div>
+              <div class="orbit-ring" data-orbit="4"></div>
+              <div class="orbit-ring" data-orbit="5"></div>
+            </div>
+          </div>
+
+          <!-- ETAPA 4 -->
+          <div class="game-step" id="step4">
+            <div class="mole-grid">
+              <div class="mole-hole" data-hole="0"></div>
+              <div class="mole-hole" data-hole="1"></div>
+              <div class="mole-hole" data-hole="2"></div>
+              <div class="mole-hole" data-hole="3"></div>
+              <div class="mole-hole" data-hole="4"></div>
+              <div class="mole-hole" data-hole="5"></div>
+              <div class="mole-hole" data-hole="6"></div>
+              <div class="mole-hole" data-hole="7"></div>
+              <div class="mole-hole" data-hole="8"></div>
+            </div>
+            <p class="score-display">IAs derrotadas: <span id="moleScore">0</span>/10</p>
+          </div>
+
+          <!-- ETAPA 5: Flappy Bird -->
+          <div class="game-step" id="step5">
+            <canvas id="flappyCanvas" width="300" height="210"></canvas>
+            <p class="flappy-hint">Pressione [ESPAÇO] ou clique para voar!</p>
+          </div>
+
+          <!-- ETAPA 6 -->
+          <div class="game-step" id="step6">
+            <div class="tug-wrapper">
+              <div class="duck-avatar">🦆</div>
+              <div class="rope-container">
+                <div class="rope-marker" id="ropeMarker"></div>
+              </div>
+              <div class="player-avatar">🧍</div>
+            </div>
+            <button type="button" id="pullBtn" class="btn-pull">PUXAR!</button>
+          </div>
+
+          <!-- ETAPA 7: O Dilema do Pen Drive USB -->
+          <div class="game-step" id="step7">
+            <div class="usb-container">
+              <div class="usb-port" id="usbPort">
+                <span class="port-label">PORTA USB 3.0</span>
+              </div>
+              <div class="usb-drive-wrapper" id="usbDriveWrapper">
+                <div class="usb-drive" id="usbDrive">
+                  <div class="usb-head">
+                    <div class="usb-hole"></div>
+                    <div class="usb-hole"></div>
+                  </div>
+                  <div class="usb-body">USB</div>
+                </div>
+              </div>
+            </div>
+            <div class="usb-controls">
+              <button type="button" id="flipUsbBtn" class="btn-usb">Girar Pen Drive 🔄</button>
+              <button type="button" id="plugUsbBtn" class="btn-usb primary">Encaixar 🔌</button>
+            </div>
+            <p class="usb-status" id="usbStatus">Lado atual: Cima (Tentativa 1)</p>
+          </div>
+
+          <!-- ETAPA 8: Fita Adesiva -->
+          <div class="game-step" id="step8">
+            <div class="tape-container">
+              <div class="tape-roll" id="tapeRoll">
+                <div class="tape-inner"></div>
+                <div class="tape-tab" id="tapeTab"></div>
+              </div>
+            </div>
+            <p class="tape-status" id="tapeStatus">Arraste para girar e encontre a ponta!</p>
+          </div>
+
+          <!-- ETAPA 9: Antena de TV com Bombril -->
+          <div class="game-step" id="step9">
+            <div class="tv-setup">
+              <div class="tv-screen" id="tvScreen">
+                <div class="tv-static" id="tvStatic"></div>
+                <div class="tv-content" id="tvContent">SINAL 100% OK</div>
+              </div>
+              <div class="antenna-base">
+                <div class="antenna-rod" id="antennaRod">
+                  <div class="steel-wool">🧽</div>
+                </div>
+              </div>
+            </div>
+            <p class="tv-status" id="tvStatus">Segure e ajuste a antena na posição exata!</p>
+          </div>
+
+        </div>
+
+        <!-- RODAPÉ DOS JOGOS -->
+        <div class="captcha-footer" id="gameFooter" style="display: none;">
+          <button type="button" id="verifyBtn" class="btn-verify">VERIFICAR</button>
+        </div>
+
+      </div>
+
+      <button type="submit" id="submitBtn" class="btn-submit" disabled>
+        Entrar / Iniciar
+      </button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
